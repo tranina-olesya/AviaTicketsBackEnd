@@ -1,0 +1,26 @@
+server:
+  port: 80
+  connection-timeout: 1800000
+
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://ec2-184-72-237-95.compute-1.amazonaws.com:5432/d6v5hnicjq9pls
+#    username: pqhrsijaafdyby
+#    password: 6a69cf20d877403a747544fe7dbd22710d0902f6e0779a1cb61eef1a92c26c66
+#    name: d6v5hnicjq9pls
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aviatickets
+    username: postgres
+    password: 123456
+    name: aviatickets
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
