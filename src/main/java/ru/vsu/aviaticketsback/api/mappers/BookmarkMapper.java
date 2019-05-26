@@ -17,12 +17,12 @@ public abstract class BookmarkMapper {
     protected UserRepository userRepository;
 
     @Mappings({
-            @Mapping(target = "user", expression = "java(userRepository.findById(bookmarkRequestDTO.getUserId()).get())")
+            @Mapping(target = "user", expression = "java(userRepository.findUserByCode(bookmarkRequestDTO.getUserCode()))")
     })
     public abstract Bookmark bookmarkRequestDtoToBookmark(BookmarkRequestDTO bookmarkRequestDTO);
 
     @Mappings({
-            @Mapping(target = "userId", source = "bookmark.user.id")
+            @Mapping(target = "userCode", source = "bookmark.user.code")
     })
     public abstract BookmarkResponseDTO bookmarkToBookmarkResponseDTO(Bookmark bookmark);
 

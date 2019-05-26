@@ -6,7 +6,7 @@ import ru.vsu.aviaticketsback.ticketssearch.models.FlightType;
 public class BookmarkResponseDTO {
     private Long id;
 
-    private Long userId;
+    private String userCode;
 
     private String origin;
 
@@ -27,12 +27,12 @@ public class BookmarkResponseDTO {
     public BookmarkResponseDTO() {
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     public String getOrigin() {

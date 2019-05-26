@@ -17,12 +17,12 @@ public abstract class SearchHistoryEntryMapper {
     protected UserRepository userRepository;
 
     @Mappings({
-            @Mapping(target = "user", expression = "java(userRepository.findById(searchHistoryEntryRequestDTO.getUserId()).get())")
+            @Mapping(target = "user", expression = "java(userRepository.findUserByCode(searchHistoryEntryRequestDTO.getUserCode()))")
     })
     public abstract SearchHistoryEntry searchHistoryEntryRequestDtoToSearchHistoryEntry(SearchHistoryEntryRequestDTO searchHistoryEntryRequestDTO);
 
     @Mappings({
-            @Mapping(target = "userId", source = "searchHistoryEntry.user.id")
+            @Mapping(target = "userCode", source = "searchHistoryEntry.user.code")
     })
     public abstract SearchHistoryEntryResponseDTO searchHistoryEntryToSearchHistoryEntryResponseDto(SearchHistoryEntry searchHistoryEntry);
 

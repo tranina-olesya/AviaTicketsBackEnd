@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class SearchHistoryEntryRequestDTO {
 
-    private Long userId;
+    private String userCode;
 
     private String origin;
 
@@ -32,12 +32,12 @@ public class SearchHistoryEntryRequestDTO {
     public SearchHistoryEntryRequestDTO() {
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     public String getOrigin() {
