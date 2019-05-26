@@ -52,4 +52,12 @@ public class BookmarkController {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value = "/bookmarks/find", method = RequestMethod.GET)
+    public BookmarkResponseDTO findBookmark(BookmarkRequestDTO bookmarkRequestDTO) {
+        User user = userService.getByCode(bookmarkRequestDTO.getUserCode());
+        Bookmark bookmark = bookmarkService.findBookmark(user, bookmarkRequestDTO.getOrigin(), bookmarkRequestDTO.getDestination(),
+                bookmarkRequestDTO.getAdultCount(), bookmarkRequestDTO.getChildCount(), bookmarkRequestDTO.getInfantCount(),
+                bookmarkRequestDTO.getFlightType(), bookmarkRequestDTO.getTransfers(), bookmarkRequestDTO.getClassType());
+        return bookmarkMapper.bookmarkToBookmarkResponseDTO(bookmark);
+    }
 }
