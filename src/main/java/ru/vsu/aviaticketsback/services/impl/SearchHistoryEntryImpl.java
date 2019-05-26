@@ -35,4 +35,10 @@ public class SearchHistoryEntryImpl implements SearchHistoryEntryService {
     public List<SearchHistoryEntry> getAllByUser(User user) {
         return searchHistoryEntryRepository.findAllByUser(user);
     }
+
+    @Override
+    public void deleteAllByUser(User user) {
+        for (SearchHistoryEntry searchHistoryEntry : searchHistoryEntryRepository.findAllByUser(user))
+            delete(searchHistoryEntry.getId());
+    }
 }

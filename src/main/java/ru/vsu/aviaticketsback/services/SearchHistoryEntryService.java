@@ -10,4 +10,5 @@ public interface SearchHistoryEntryService {
     void addBSearchHistoryEntry(SearchHistoryEntry searchHistoryEntry);
     void delete(Long id);
     List<SearchHistoryEntry> getAllByUser(User user);
+    void deleteAllByUser(User user);
 }

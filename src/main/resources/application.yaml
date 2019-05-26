@@ -4,10 +4,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://ec2-184-72-237-95.compute-1.amazonaws.com:5432/d6v5hnicjq9pls
-    username: pqhrsijaafdyby
-    password: 6a69cf20d877403a747544fe7dbd22710d0902f6e0779a1cb61eef1a92c26c66
-    name: d6v5hnicjq9pls
+    url: jdbc:postgresql://ec2-46-137-113-157.eu-west-1.compute.amazonaws.com:5432/dffu5h5gn964at
+    username: zuahkgtwrcflpu
+    password: 8f94970d288b26bb72a48a9eaeafe82f03eb76baed10dc10b149b15777d87e92
+    name: zuahkgtwrcflpu
   jpa:
     hibernate:
       ddl-auto: update
