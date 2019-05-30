@@ -10,6 +10,7 @@ import ru.vsu.aviaticketsback.repositories.SearchHistoryEntryRepository;
 import ru.vsu.aviaticketsback.services.BookmarkService;
 import ru.vsu.aviaticketsback.services.SearchHistoryEntryService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,6 +24,7 @@ public class SearchHistoryEntryImpl implements SearchHistoryEntryService {
 
     @Override
     public void addBSearchHistoryEntry(SearchHistoryEntry searchHistoryEntry) {
+        searchHistoryEntry.setDate(new Date());
         searchHistoryEntryRepository.save(searchHistoryEntry);
     }
 
@@ -33,12 +35,12 @@ public class SearchHistoryEntryImpl implements SearchHistoryEntryService {
 
     @Override
     public List<SearchHistoryEntry> getAllByUser(User user) {
-        return searchHistoryEntryRepository.findAllByUser(user);
+        return searchHistoryEntryRepository.findAllByUserOrderByDateDesc(user);
     }
 
     @Override
     public void deleteAllByUser(User user) {
-        for (SearchHistoryEntry searchHistoryEntry : searchHistoryEntryRepository.findAllByUser(user))
+        for (SearchHistoryEntry searchHistoryEntry : searchHistoryEntryRepository.findAllByUserOrderByDateDesc(user))
             delete(searchHistoryEntry.getId());
     }
 }

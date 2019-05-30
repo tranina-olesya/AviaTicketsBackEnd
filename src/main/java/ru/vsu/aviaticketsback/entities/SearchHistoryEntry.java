@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "search_history_entries")
@@ -26,6 +27,8 @@ public class SearchHistoryEntry {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    private Date date;
 
     private String origin;
 
@@ -52,7 +55,7 @@ public class SearchHistoryEntry {
     public SearchHistoryEntry() {
     }
 
-    public SearchHistoryEntry(User user, String origin, String destination, LocalDateTime outboundDate, LocalDateTime inboundDate, Integer adultsCount, Integer childrenCount, Integer infantsCount, FlightType flightType, boolean transfers, CabinClass cabinClass) {
+    public SearchHistoryEntry(User user, Date date, String origin, String destination, LocalDateTime outboundDate, LocalDateTime inboundDate, Integer adultsCount, Integer childrenCount, Integer infantsCount, FlightType flightType, boolean transfers, CabinClass cabinClass) {
         this.user = user;
         this.origin = origin;
         this.destination = destination;
@@ -160,5 +163,13 @@ public class SearchHistoryEntry {
 
     public void setCabinClass(CabinClass cabinClass) {
         this.cabinClass = cabinClass;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

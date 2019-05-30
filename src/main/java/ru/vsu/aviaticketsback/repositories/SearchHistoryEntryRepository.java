@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface SearchHistoryEntryRepository extends CrudRepository<SearchHistoryEntry, Long> {
-    List<SearchHistoryEntry> findAllByUser(User user);
+    List<SearchHistoryEntry> findAllByUserOrderByDateDesc(User user);
 }
