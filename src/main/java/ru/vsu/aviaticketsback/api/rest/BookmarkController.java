@@ -1,17 +1,19 @@
 package ru.vsu.aviaticketsback.api.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ru.vsu.aviaticketsback.api.dto.EmptyJsonResponse;
 import ru.vsu.aviaticketsback.api.dto.request.BookmarkRequestDTO;
 import ru.vsu.aviaticketsback.api.dto.response.BookmarkResponseDTO;
+import ru.vsu.aviaticketsback.api.mappers.BookmarkMapper;
 import ru.vsu.aviaticketsback.entities.Bookmark;
 import ru.vsu.aviaticketsback.entities.User;
-import ru.vsu.aviaticketsback.api.mappers.BookmarkMapper;
 import ru.vsu.aviaticketsback.services.BookmarkService;
 import ru.vsu.aviaticketsback.services.UserService;
 
@@ -20,10 +22,8 @@ import java.util.List;
 @RestController
 public class BookmarkController {
     private final BookmarkService bookmarkService;
-
-    private BookmarkMapper bookmarkMapper;
-
     private final UserService userService;
+    private BookmarkMapper bookmarkMapper;
 
     @Autowired
     public BookmarkController(BookmarkService bookmarkService, UserService userService, BookmarkMapper bookmarkMapper) {
@@ -53,11 +53,15 @@ public class BookmarkController {
     }
 
     @RequestMapping(value = "/bookmarks/find", method = RequestMethod.GET)
-    public BookmarkResponseDTO findBookmark(BookmarkRequestDTO bookmarkRequestDTO) {
+    public ResponseEntity findBookmark(BookmarkRequestDTO bookmarkRequestDTO) {
         User user = userService.getByCode(bookmarkRequestDTO.getUserCode());
         Bookmark bookmark = bookmarkService.findBookmark(user, bookmarkRequestDTO.getOrigin(), bookmarkRequestDTO.getDestination(),
                 bookmarkRequestDTO.getAdultCount(), bookmarkRequestDTO.getChildCount(), bookmarkRequestDTO.getInfantCount(),
                 bookmarkRequestDTO.getFlightType(), bookmarkRequestDTO.getTransfers(), bookmarkRequestDTO.getClassType());
-        return bookmarkMapper.bookmarkToBookmarkResponseDTO(bookmark);
+        BookmarkResponseDTO bookmarkResponseDTO = bookmarkMapper.bookmarkToBookmarkResponseDTO(bookmark);
+        if (bookmarkResponseDTO != null)
+            return ResponseEntity.ok(bookmarkResponseDTO);
+        else
+            return ResponseEntity.ok(new EmptyJsonResponse());
     }
 }
