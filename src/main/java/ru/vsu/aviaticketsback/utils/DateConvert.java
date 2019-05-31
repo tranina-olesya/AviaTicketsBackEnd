@@ -16,4 +16,10 @@ public class DateConvert {
             return null;
         }
     }
+
+    public static String getStringFromDate(Date date) {
+        String pattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+        return simpleDateFormat.format(date);
+    }
 }

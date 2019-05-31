@@ -46,8 +46,12 @@ public class SearchHistoryEntryController {
 
     @RequestMapping(value = "/search-history/{userCode}/{searchHistoryEntryId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteSearchHistoryEntry(@PathVariable String userCode, @PathVariable Long searchHistoryEntryId) {
-        searchHistoryEntryService.delete(searchHistoryEntryId);
-        return ResponseEntity.ok().build();
+        User user = userService.getByCode(userCode);
+        if (user != null) {
+            searchHistoryEntryService.delete(searchHistoryEntryId);
+            return ResponseEntity.ok().build();
+        } else
+            return ResponseEntity.notFound().build();
     }
 
     @RequestMapping(value = "/search-history/{userCode}", method = RequestMethod.DELETE)
