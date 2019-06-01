@@ -61,6 +61,7 @@ public class DatabaseControllersIntegrationTest {
         ResponseEntity<String> postResponse = restTemplate.postForEntity(getRootUrl() + "/users",
                 user, String.class);
         assertNotNull(postResponse);
+        assertEquals(postResponse.getStatusCode(), HttpStatus.OK);
         assertNotNull(postResponse.getBody());
     }
 
@@ -117,6 +118,7 @@ public class DatabaseControllersIntegrationTest {
         ResponseEntity<String> postResponse = restTemplate.postForEntity(getRootUrl() + "/bookmarks",
                 bookmarkRequestDTO, String.class);
         assertNotNull(postResponse);
+        assertEquals(postResponse.getStatusCode(), HttpStatus.OK);
         assertNotNull(postResponse.getBody());
 
         HttpHeaders headers = new HttpHeaders();
@@ -204,6 +206,12 @@ public class DatabaseControllersIntegrationTest {
         SearchHistoryEntryRequestDTO searchHistoryEntryRequestDTO = RequestDTOHelper.createSearchHistoryEntryRequestDTO(CODE);
 
         ResponseEntity<String> postResponse = restTemplate.postForEntity(getRootUrl() + "/search-history",
+                searchHistoryEntryRequestDTO, String.class);
+        assertNotNull(postResponse);
+        assertEquals(postResponse.getStatusCode(), HttpStatus.OK);
+        assertNotNull(postResponse.getBody());
+
+        postResponse = restTemplate.postForEntity(getRootUrl() + "/search-history",
                 searchHistoryEntryRequestDTO, String.class);
         assertNotNull(postResponse);
         assertEquals(postResponse.getStatusCode(), HttpStatus.OK);
