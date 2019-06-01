@@ -28,9 +28,13 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public ResponseEntity<Long> createUser(@RequestBody UserRequestDTO userRequestDTO) {
-        User user = userMapper.userRequestDtoToUser(userRequestDTO);
-        userService.addUser(user);
-        return ResponseEntity.ok(user.getId());
+        User userByCode = userService.getByCode(userRequestDTO.getCode());
+        if (userByCode == null) {
+            User user = userMapper.userRequestDtoToUser(userRequestDTO);
+            userService.addUser(user);
+            return ResponseEntity.ok(user.getId());
+        } else
+            return ResponseEntity.ok(userByCode.getId());
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
