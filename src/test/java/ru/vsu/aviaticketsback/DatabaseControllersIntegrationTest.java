@@ -45,11 +45,6 @@ public class DatabaseControllersIntegrationTest {
     }
 
     @Test
-    public void contextLoads() {
-
-    }
-
-    @Test
     public void users_shouldGetAllUsers() {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
@@ -171,7 +166,7 @@ public class DatabaseControllersIntegrationTest {
     }
 
     @Test
-    public void bookmarks_shouldDeleteSearchHistoryEntry() {
+    public void searchHistory_shouldDeleteSearchHistoryEntry() {
         SearchHistoryEntryRequestDTO searchHistoryEntryRequestDTO = RequestDTOHelper.createSearchHistoryEntryRequestDTO(CODE);
 
         ResponseEntity<String> postResponse = restTemplate.postForEntity(getRootUrl() + "/search-history",
@@ -205,7 +200,7 @@ public class DatabaseControllersIntegrationTest {
     }
 
     @Test
-    public void bookmarks_shouldDeleteAllSearchHistory() {
+    public void searchHistory_shouldDeleteAllSearchHistory() {
         SearchHistoryEntryRequestDTO searchHistoryEntryRequestDTO = RequestDTOHelper.createSearchHistoryEntryRequestDTO(CODE);
 
         ResponseEntity<String> postResponse = restTemplate.postForEntity(getRootUrl() + "/search-history",

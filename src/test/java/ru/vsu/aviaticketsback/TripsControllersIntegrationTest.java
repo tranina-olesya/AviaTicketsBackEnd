@@ -41,11 +41,6 @@ public class TripsControllersIntegrationTest {
     }
 
     @Test
-    public void contextLoads() {
-
-    }
-
-    @Test
     public void cities_shouldGetCities() {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getRootUrl() + "/cities")
                 .queryParam("origin", "Москва")
