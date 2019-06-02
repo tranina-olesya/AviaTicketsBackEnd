@@ -16,6 +16,7 @@ import ru.vsu.aviaticketsback.ticketssearch.models.iata.Route;
 import ru.vsu.aviaticketsback.ticketssearch.models.kiwi.KiwiResponse;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +41,8 @@ public class KiwiProviderApi extends ProviderAPI implements TicketProviderApi {
 
     @Override
     public List<Trip> getTickets(SearchData searchData) {
+        if (searchData.getCabinClass().equals(CabinClass.BUSINESS))
+            return new ArrayList<>();
         if (searchData.getOrigin().getCode() == null || searchData.getDestination().getCode() == null) {
             Route cityCodes = iataProviderAPI.getCityCodes(searchData.getOrigin().getName(), searchData.getDestination().getName());
             searchData.getOrigin().setCode(cityCodes.getOrigin().getIata());
@@ -51,9 +54,6 @@ public class KiwiProviderApi extends ProviderAPI implements TicketProviderApi {
     }
 
     private KiwiResponse getKiwiResponse(SearchData searchData) {
-        if (searchData.getCabinClass() == CabinClass.BUSINESS) {
-            return null;
-        }
         String outboundDate = convertDateToString(searchData.getOutboundDate());
         String inboundDate = searchData.getFlightType() == FlightType.ROUND ?
                 convertDateToString(searchData.getInboundDate()) : null;

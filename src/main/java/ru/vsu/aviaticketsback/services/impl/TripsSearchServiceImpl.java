@@ -66,6 +66,8 @@ public class TripsSearchServiceImpl implements TripsSearchService {
     private List<Trip> mergeTrips(List<List<Trip>> trips) {
         List<Trip> result = new ArrayList<>();
         for (List<Trip> list : trips) {
+            if (list == null)
+                continue;
             if (result.isEmpty()) {
                 result.addAll(list);
             } else {

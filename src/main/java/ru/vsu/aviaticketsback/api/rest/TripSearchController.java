@@ -32,7 +32,7 @@ public class TripSearchController {
                                Integer adultsCount, Integer childrenCount, Integer infantsCount,
                                FlightType flightType, CabinClass cabinClass, Boolean transfers) {
         Date outbound = DateConvert.getDateFromRequest(dateOutbound);
-        Date inbound = DateConvert.getDateFromRequest(dateInbound);
+        Date inbound = flightType.equals(FlightType.ROUND) ? DateConvert.getDateFromRequest(dateInbound) : null;
 
         SearchData searchData = new SearchData(new SearchPlace(originName, originCode),
                 new SearchPlace(destinationName, destinationCode),

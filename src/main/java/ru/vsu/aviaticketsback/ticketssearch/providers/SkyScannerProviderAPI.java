@@ -132,9 +132,9 @@ public class SkyScannerProviderAPI extends ProviderAPI implements TicketProvider
         return simpleDateFormat.format(date);
     }
 
-    public SkyScannerResponse getSessionResponse(SearchData searchData, String sessionKey) {
+    private SkyScannerResponse getSessionResponse(SearchData searchData, String sessionKey) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(baseUrl + SESSION_RESULTS_ENDPOINT + sessionKey)
-                .queryParam("stops", searchData.getTransfers() ? 0 : 1);
+                .queryParam("stops", searchData.getTransfers() ? 1 : 0);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
