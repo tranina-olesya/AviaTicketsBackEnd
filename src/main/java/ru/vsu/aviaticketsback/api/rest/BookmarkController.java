@@ -1,5 +1,7 @@
 package ru.vsu.aviaticketsback.api.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import ru.vsu.aviaticketsback.services.UserService;
 import java.util.List;
 
 @RestController
+@Api(tags = {"Bookmarks"})
 public class BookmarkController {
     private final BookmarkService bookmarkService;
     private final UserService userService;
@@ -32,6 +35,7 @@ public class BookmarkController {
         this.bookmarkMapper = bookmarkMapper;
     }
 
+    @ApiOperation(value = "Получить все закладки по конкретному пользователю.")
     @RequestMapping(value = "/users/{userCode}/bookmarks", method = RequestMethod.GET)
     public List<BookmarkResponseDTO> getBookmarksForUser(@PathVariable String userCode) {
         User user = userService.getByCode(userCode);
@@ -39,6 +43,7 @@ public class BookmarkController {
         return bookmarkMapper.bookmarkListToBookmarkResponseDtoList(bookmarks);
     }
 
+    @ApiOperation(value = "Добавить закладку.")
     @RequestMapping(value = "/bookmarks", method = RequestMethod.POST)
     public ResponseEntity<Long> createBookmark(@RequestBody BookmarkRequestDTO bookmarkRequestDTO) {
         Bookmark bookmark = bookmarkMapper.bookmarkRequestDtoToBookmark(bookmarkRequestDTO);
@@ -46,12 +51,18 @@ public class BookmarkController {
         return ResponseEntity.ok(bookmark.getId());
     }
 
-    @RequestMapping(value = "/bookmarks/{bookmarkId}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteBookmark(@PathVariable Long bookmarkId) {
-        bookmarkService.delete(bookmarkId);
-        return ResponseEntity.ok().build();
+    @ApiOperation(value = "Удалить закладку (по ее id) для конкретного пользователя.")
+    @RequestMapping(value = "/bookmarks/{userCode}/{bookmarkId}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteBookmark(@PathVariable String userCode, @PathVariable Long bookmarkId) {
+        User user = userService.getByCode(userCode);
+        if (user != null) {
+            bookmarkService.delete(bookmarkId);
+            return ResponseEntity.ok().build();
+        } else
+            return ResponseEntity.notFound().build();
     }
 
+    @ApiOperation(value = "Проверить была ли уже добавлена закладка с такими параметрами.")
     @RequestMapping(value = "/bookmarks/find", method = RequestMethod.GET)
     public ResponseEntity findBookmark(BookmarkRequestDTO bookmarkRequestDTO) {
         User user = userService.getByCode(bookmarkRequestDTO.getUserCode());

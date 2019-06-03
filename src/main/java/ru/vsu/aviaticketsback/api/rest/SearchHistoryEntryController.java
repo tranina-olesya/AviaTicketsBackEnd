@@ -1,5 +1,9 @@
 package ru.vsu.aviaticketsback.api.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +22,7 @@ import ru.vsu.aviaticketsback.services.UserService;
 import java.util.List;
 
 @RestController
+@Api(tags = {"Search History"})
 public class SearchHistoryEntryController {
     private final SearchHistoryEntryService searchHistoryEntryService;
     private final UserService userService;
@@ -30,6 +35,7 @@ public class SearchHistoryEntryController {
         this.searchHistoryEntryMapper = searchHistoryEntryMapper;
     }
 
+    @ApiOperation(value = "Получить всю историю поиска по конкретному пользователю.")
     @RequestMapping(value = "/users/{userCode}/search-history", method = RequestMethod.GET)
     public List<SearchHistoryEntryResponseDTO> getSearchHistoryForUser(@PathVariable String userCode) {
         User user = userService.getByCode(userCode);
@@ -37,6 +43,7 @@ public class SearchHistoryEntryController {
         return searchHistoryEntryMapper.searchHistoryEntryListToSearchHistoryEntryResponseDtoList(searchHistoryEntries);
     }
 
+    @ApiOperation(value = "Добавить элемент истории поиска.")
     @RequestMapping(value = "/search-history", method = RequestMethod.POST)
     public ResponseEntity<Long> createSearchHistoryEntry(@RequestBody SearchHistoryEntryRequestDTO searchHistoryEntryRequestDTO) {
         SearchHistoryEntry searchHistoryEntry = searchHistoryEntryMapper.searchHistoryEntryRequestDtoToSearchHistoryEntry(searchHistoryEntryRequestDTO);
@@ -44,6 +51,7 @@ public class SearchHistoryEntryController {
         return ResponseEntity.ok(searchHistoryEntry.getId());
     }
 
+    @ApiOperation(value = "Удалить один элемент истории поиска (по его id) для конкретного пользователя.")
     @RequestMapping(value = "/search-history/{userCode}/{searchHistoryEntryId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteSearchHistoryEntry(@PathVariable String userCode, @PathVariable Long searchHistoryEntryId) {
         User user = userService.getByCode(userCode);
@@ -54,6 +62,7 @@ public class SearchHistoryEntryController {
             return ResponseEntity.notFound().build();
     }
 
+    @ApiOperation(value = "Удалить всю историю поиска для конкретного пользователя.")
     @RequestMapping(value = "/search-history/{userCode}", method = RequestMethod.DELETE)
     public ResponseEntity deleteAllSearchHistory(@PathVariable String userCode) {
         User user = userService.getByCode(userCode);

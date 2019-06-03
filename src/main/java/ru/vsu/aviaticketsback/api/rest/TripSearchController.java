@@ -1,5 +1,7 @@
 package ru.vsu.aviaticketsback.api.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@Api(tags = {"Trips Search"})
 public class TripSearchController {
 
     private TripsSearchService tripsSearchService;
@@ -26,6 +29,7 @@ public class TripSearchController {
         this.tripsSearchService = tripsSearchService;
     }
 
+    @ApiOperation(value = "Получить все билеты со следующими параметрами (формат ввода даты ДД-ММ-ГГГГ).")
     @RequestMapping(value = "/trips", method = RequestMethod.GET)
     public List<Trip> getTrips(String originCode, String originName, String destinationCode, String destinationName,
                                String dateOutbound, String dateInbound,
@@ -40,20 +44,10 @@ public class TripSearchController {
                 adultsCount, childrenCount, infantsCount,
                 flightType, transfers, cabinClass);
 
-//        SearchData fake = new SearchData();
-//        fake.setAdultsCount(1);
-//        fake.setInfantsCount(0);
-//        fake.setChildrenCount(0);
-//        fake.setOrigin(new SearchPlace("Воронеж", null));
-//        fake.setDestination(new SearchPlace("Москва", null));
-//        fake.setCabinClass(CabinClass.ECONOMY);
-//        fake.setFlightType(FlightType.ONEWAY);
-//        fake.setTransfers(true);
-//        fake.setOutboundDate(new Date());
-
         return tripsSearchService.getAllTrips(searchData);
     }
 
+    @ApiOperation(value = "Получить IATA-код городов отправления и прибытия.")
     @RequestMapping(value = "/cities", method = RequestMethod.GET)
     public Route getCityCodes(String origin, String destination) {
         return tripsSearchService.getCityCodes(origin, destination);
